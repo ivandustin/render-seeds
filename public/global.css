@@ -1,0 +1,35 @@
+html, body {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    box-sizing: border-box;
+    padding: 0 2rem;
+    color: #333;
+    margin: 0;
+}
+
+.debug, .debug * {
+    outline: 1px dashed green;
+}
+
+.radley {
+    font-family: 'Radley', serif;
+    letter-spacing: .04rem;
+    line-height: 1.618;
+}
+
+.open-sans {
+    font-family: 'Open Sans', sans-serif;
+    letter-spacing: .1618rem;
+}
+
+.center {
+    align-items: center;
+    flex-wrap: wrap;
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
