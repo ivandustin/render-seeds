@@ -1,3 +1,4 @@
+import polyfill from 'rollup-plugin-polyfill-node';
 import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import commonjs from '@rollup/plugin-commonjs';
@@ -48,6 +49,7 @@ export default {
         // a separate file - better for performance
         css({ output: 'bundle.css' }),
 
+        polyfill(),
         // If you have external dependencies installed from
         // npm, you'll most likely need these plugins. In
         // some cases you'll need additional configuration -

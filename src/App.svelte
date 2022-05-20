@@ -1,19 +1,17 @@
 <script>
+    import getSeeds from './get-seeds'
+    import setId from './set-id'
+
     let seeds = []
     let index = 0
     let seed  = undefined
 
     async function main() {
         seeds = await getSeeds()
+        seeds = setId(seeds)
         next()
     }
     
-    async function getSeeds() {
-        let response = await fetch('/seeds-json/seeds.json')
-        let object   = await response.json()
-        return object.seeds
-    }
-
     function next() {
         if (index < seeds.length) {
             seed = seeds[index++]
@@ -35,16 +33,4 @@
     {/if}
 </main>
 
-<style>
-    p {
-        font-size: 1.618rem;
-        margin: 3rem 0;
-    }
-
-    .reference {
-        text-transform: uppercase;
-        font-size: .77rem;
-        margin-top: 5rem;
-        color: #9F9F9F;
-    }
-</style>
+<style></style>

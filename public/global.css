@@ -33,3 +33,15 @@ body {
     height: 100%;
     width: 100%;
 }
+
+p {
+    font-size: 1.618rem;
+    margin: 3rem 0;
+}
+
+p.reference {
+    text-transform: uppercase;
+    font-size: .77rem;
+    margin-top: 5rem;
+    color: #9F9F9F;
+}
