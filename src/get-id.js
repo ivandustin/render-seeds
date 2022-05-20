@@ -1,7 +1,10 @@
 const getPath = require('./get-path')
 
 function getId() {
-    return getPath()[0].toLowerCase()
+    let path = getPath()
+    if (path.length > 0)
+        return path[0].toLowerCase()
+    return null
 }
 
 module.exports = getId

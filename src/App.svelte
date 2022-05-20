@@ -1,15 +1,21 @@
 <script>
+    import createLookup from './create-lookup'
     import getSeeds from './get-seeds'
     import setId from './set-id'
+    import getId from './get-id'
 
-    let seeds = []
-    let index = 0
-    let seed  = undefined
+    let id     = null
+    let seeds  = []
+    let index  = 0
+    let seed   = null
+    let lookup = {}
 
     async function main() {
-        seeds = await getSeeds()
-        seeds = setId(seeds)
-        next()
+        id     = getId()
+        seeds  = await getSeeds()
+        seeds  = setId(seeds)
+        lookup = createLookup(seeds)
+        seed   = lookup[id]
     }
     
     function next() {

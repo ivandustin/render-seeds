@@ -1,8 +1,8 @@
-const getId = require('./get-id')
+const referenceToId = require('./reference-to-id')
 
 function setId(seeds) {
     return seeds.map(function(seed) {
-        seed['id'] = getId(seed.reference)
+        seed['id'] = referenceToId(seed.reference)
         return seed
     })
 }
