@@ -9,3 +9,5 @@ cd ..
 npm install
 npm run dev
 ```
+
+Go to http://localhost:8080/matthew-4-4
