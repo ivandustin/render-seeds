@@ -1,12 +1,13 @@
 <script>
-    import createSequence from './create-sequence'
     import createLookup from './create-lookup'
     import fetchSeeds from './fetch-seeds'
+    import shuffle from './shuffle'
     import storage from './storage'
     import setId from './set-id'
     import getId from './get-id'
 
     let id       = null
+    let ids      = []
     let seeds    = []
     let index    = null
     let seed     = null
@@ -18,8 +19,9 @@
         seeds    = await fetchSeeds()
         seeds    = setId(seeds)
         lookup   = createLookup(seeds)
+        ids      = Object.keys(lookup)
         index    = storage.get('index', 0)
-        sequence = storage.get('sequence', function() { return createSequence(lookup) })
+        sequence = storage.get('sequence', function() { return shuffle(ids) })
         show()
     }
     
