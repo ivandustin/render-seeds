@@ -1,10 +1,8 @@
-const referenceToId = require('./reference-to-id')
+import referenceToId from './reference-to-id'
 
-function setId(seeds) {
+export default function setId(seeds) {
     return seeds.map(function(seed) {
         seed['id'] = referenceToId(seed.reference)
         return seed
     })
 }
-
-module.exports = setId

@@ -1,10 +1,8 @@
-const getPath = require('./get-path')
+import getPath from './get-path'
 
-function getId() {
+export default function getId() {
     let path = getPath()
     if (path.length > 0)
         return path[0].toLowerCase()
     return null
 }
-
-module.exports = getId

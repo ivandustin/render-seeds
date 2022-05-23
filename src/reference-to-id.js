@@ -1,8 +1,6 @@
-const parseReference = require('./parse-reference')
+import parseReference from './parse-reference'
 
-function referenceToId(reference) {
+export default function referenceToId(reference) {
     let { book, chapter, verse } = parseReference(reference)
     return `${book}-${chapter}-${verse}`.toLowerCase()
 }
-
-module.exports = referenceToId

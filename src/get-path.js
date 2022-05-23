@@ -1,8 +1,6 @@
-const path = require('path')
+import path from 'path'
 
-function getPath() {
+export default function getPath() {
     let { pathname } = window.location
     return path.normalize(pathname).split('/').filter(x => x)
 }
-
-module.exports = getPath

@@ -1,6 +1,6 @@
-const assert = require('assert')
+import assert from 'assert'
 
-function parseReference(reference) {
+export default function parseReference(reference) {
     let pattern = /^([a-zA-Z]+)\s(\d{1,2}):(\d{1,2})(-(\d{1,2})){0,1}$/
     let matches = reference.match(pattern)
     assert(matches !== null, reference)
@@ -9,5 +9,3 @@ function parseReference(reference) {
     let verse   = matches[3]
     return { book, chapter, verse }
 }
-
-module.exports = parseReference
