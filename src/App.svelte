@@ -43,7 +43,7 @@
         clearTimeout(timer)
         timer = setTimeout(function() {
             random.set(id)
-        }, 15 * 1000)
+        }, 60 * 1000)
     }
 
     main()
