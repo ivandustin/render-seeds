@@ -1,40 +1,45 @@
 <script>
     import createLookup from './create-lookup'
+    import random from './random-algorithm'
     import fetchSeeds from './fetch-seeds'
     import shuffle from './shuffle'
-    import storage from './storage'
     import setId from './set-id'
     import getId from './get-id'
 
-    let id       = null
-    let ids      = []
-    let seeds    = []
-    let index    = null
-    let seed     = null
-    let lookup   = {}
-    let sequence = []
+    let id     = null
+    let ids    = []
+    let seed   = null
+    let seeds  = []
+    let lookup = {}
+    let timer  = null
 
     async function main() {
-        id       = getId()
-        seeds    = await fetchSeeds()
-        seeds    = setId(seeds)
-        lookup   = createLookup(seeds)
-        ids      = Object.keys(lookup)
-        index    = storage.get('index', 0)
-        sequence = storage.get('sequence', function() { return shuffle(ids) })
-        show()
-    }
-    
-    function next() {
-        if (index < seeds.length - 1) {
-            index = storage.set('index', ++index)
-            show()
+        id     = getId()
+        seeds  = await fetchSeeds()
+        seeds  = setId(seeds)
+        lookup = createLookup(seeds)
+        ids    = Object.keys(lookup)
+        random.init(ids)
+        if (id) {
+            seed = lookup[id]
+            save()
+        } else {
+            next()
         }
     }
 
-    function show() {
-        seed = lookup[sequence[index]]
+    function next() {
+        id   = random.get()
+        seed = lookup[id]
         window.scrollTo(0,0)
+        save()
+    }
+
+    function save() {
+        clearTimeout(timer)
+        timer = setTimeout(function() {
+            random.set(id)
+        }, 15 * 1000)
     }
 
     main()
