@@ -1,7 +1,9 @@
 <script>
     import createLookup from './create-lookup'
+    import { fade } from 'svelte/transition'
     import random from './random-algorithm'
     import fetchSeeds from './fetch-seeds'
+    import transition from './transition'
     import shuffle from './shuffle'
     import setId from './set-id'
     import getId from './get-id'
@@ -24,12 +26,14 @@
             seed = lookup[id]
             save()
         } else {
-            next()
+            await next()
         }
     }
 
-    function next() {
+    async function next() {
         id   = random.get()
+        seed = null
+        await transition(0)
         seed = lookup[id]
         window.scrollTo(0,0)
         save()
@@ -47,13 +51,13 @@
 
 <svelte:body on:dblclick={next}/>
 
-<main>
-    {#if seed}
+{#if seed}
+    <main in:fade>
         {#each seed.paragraphs as entry}
             <p class="radley">{entry.paragraph}</p>
         {/each}
         <p class="reference open-sans">{seed.reference}</p>
-    {/if}
-</main>
+    </main>
+{/if}
 
 <style></style>
