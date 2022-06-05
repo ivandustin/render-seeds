@@ -31,7 +31,7 @@
     }
 
     async function next() {
-        id   = random.get()
+        id   = random.get(id)
         seed = null
         await transition(0)
         seed = lookup[id]

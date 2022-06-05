@@ -6,13 +6,18 @@ const localStoragePrefix = 'random-algorithm'
 let state = null
 
 function init(items) {
-    assert(items.length > 0)
+    assert(items.length > 1)
     state = createState(items)
 }
 
-function get() {
+function get(currentItem) {
     let { seen, unseen } = getPartition()
-    return getRandomItem(select(seen, unseen))
+    let array = select(seen, unseen)
+    let item  = getRandomItem(array)
+    if (array.length > 1)
+        while (item == currentItem)
+            item = getRandomItem(array)
+    return item
 }
 
 function set(item) {
@@ -51,10 +56,13 @@ function getPartition() {
 }
 
 function select(seen, unseen) {
+    let total = seen.length + unseen.length
     if (seen.length == 0)
         return unseen
     if (unseen.length == 0)
         return seen
+    if (seen.length / total < 0.2)
+        return unseen
     return Math.random() < 0.618 ? unseen : seen
 }
 
