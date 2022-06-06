@@ -33,7 +33,7 @@
         seed = null
         await transition(0)
         seed = lookup[id]
-        window.scrollTo(0,0)
+        scrollTop()
         seen()
     }
 
@@ -50,7 +50,7 @@
         }, 60 * 1000)
     }
 
-    function onpopstate(event) {
+    function onPopState(event) {
         setState(event.state)
     }
 
@@ -70,10 +70,14 @@
         window.history.pushState(state, unused, url)
     }
 
+    function scrollTop() {
+        window.scrollTo(0,0)
+    }
+
     main()
 </script>
 
-<svelte:window on:popstate={onpopstate}></svelte:window>
+<svelte:window on:popstate={onPopState}></svelte:window>
 
 <svelte:head>
     {#if seed}
