@@ -24,25 +24,27 @@
         ids    = Object.keys(lookup)
         random.init(ids)
         if (id) {
-            await go(id)
+            setSeed()
+            setTitle()
+            seen()
         } else {
             await next()
         }
     }
 
-    async function go(id) {
-        seed  = null
-        await transition(0)
-        seed  = lookup[id]
-        title = getTitle(seed)
-        scrollTop()
-        seen()
+    function setSeed() {
+        seed = lookup[id]
     }
 
     async function next() {
-        id = random.get(id)
-        await go(id)
+        id   = random.get(id)
+        seed = null
+        await transition(0)
+        setSeed()
         pushState()
+        scrollTop()
+        setTitle()
+        seen()
     }
 
     function seen() {
@@ -57,13 +59,13 @@
     }
 
     function getState() {
-        return { id, seed, title }
+        return { id }
     }
 
     async function setState(state) {
-        id    = state.id
-        seed  = state.seed
-        title = state.title
+        id = state.id
+        setSeed()
+        seen()
     }
 
     function pushState() {
@@ -79,6 +81,10 @@
 
     function getTitle(seed) {
         return seed.paragraphs[0].paragraph
+    }
+
+    function setTitle() {
+        title = getTitle(seed)
     }
 
     main()
