@@ -12,11 +12,9 @@ function init(items) {
 
 function get(currentItem) {
     let { seen, unseen } = getPartition()
-    let array = select(seen, unseen)
-    let item  = getRandomItem(array)
-    if (array.length > 1)
-        while (item == currentItem)
-            item = getRandomItem(array)
+    do {
+        var item = getRandomItem(select(seen, unseen))
+    } while (item == currentItem)
     return item
 }
 
