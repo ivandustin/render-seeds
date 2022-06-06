@@ -14,6 +14,7 @@
     let seeds  = []
     let lookup = {}
     let timer  = null
+    let title  = null
 
     async function main() {
         id     = getId()
@@ -30,9 +31,10 @@
     }
 
     async function go(id) {
-        seed = null
+        seed  = null
         await transition(0)
-        seed = lookup[id]
+        seed  = lookup[id]
+        title = getTitle(seed)
         scrollTop()
         seen()
     }
@@ -55,12 +57,13 @@
     }
 
     function getState() {
-        return { id, seed }
+        return { id, seed, title }
     }
 
     async function setState(state) {
-        id   = state.id
-        seed = state.seed
+        id    = state.id
+        seed  = state.seed
+        title = state.title
     }
 
     function pushState() {
@@ -74,15 +77,17 @@
         window.scrollTo(0,0)
     }
 
+    function getTitle(seed) {
+        return seed.paragraphs[0].paragraph
+    }
+
     main()
 </script>
 
 <svelte:window on:popstate={onPopState}></svelte:window>
 
 <svelte:head>
-    {#if seed}
-        <title>Who is Jesus? {seed.reference}</title>
-    {/if}
+    <title>{title}</title>
 </svelte:head>
 
 <svelte:body on:dblclick={next}/>
