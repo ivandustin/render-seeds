@@ -24,26 +24,26 @@
         ids    = Object.keys(lookup)
         random.init(ids)
         if (id) {
-            go(id)
+            render(id)
             replaceState()
         } else {
             await next()
         }
     }
 
-    function go(id) {
+    function render(id) {
         seed  = lookup[id]
         title = getTitle(seed)
         setAsSeen(id)
-        scrollTop()
     }
 
     async function next() {
         id   = random.get(id)
         seed = null
         await transition(0)
-        go(id)
+        render(id)
         pushState()
+        scrollTop()
     }
 
     function setAsSeen(id) {
@@ -63,7 +63,7 @@
 
     async function setState(state) {
         id = state.id
-        go(id)
+        render(id)
     }
 
     function getUrl(id) {
