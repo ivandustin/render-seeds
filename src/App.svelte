@@ -8,13 +8,13 @@
     import setId from './set-id'
     import getId from './get-id'
 
+    let title  = 'Who is Jesus?'
     let id     = null
     let ids    = []
     let seed   = null
     let seeds  = []
     let lookup = {}
     let timer  = null
-    let title  = null
 
     async function main() {
         id     = getId()
@@ -24,27 +24,26 @@
         ids    = Object.keys(lookup)
         random.init(ids)
         if (id) {
-            updateSeed()
-            updateTitle()
+            go(id)
             replaceState()
         } else {
             await next()
         }
     }
 
-    function updateSeed() {
-        seed = lookup[id]
+    function go(id) {
+        seed  = lookup[id]
+        title = getTitle(seed)
         setAsSeen(id)
+        scrollTop()
     }
 
     async function next() {
         id   = random.get(id)
         seed = null
         await transition(0)
-        updateSeed()
+        go(id)
         pushState()
-        scrollTop()
-        updateTitle()
     }
 
     function setAsSeen(id) {
@@ -64,8 +63,11 @@
 
     async function setState(state) {
         id = state.id
-        updateSeed()
-        updateTitle()
+        go(id)
+    }
+
+    function getUrl(id) {
+        return `/${id}`
     }
 
     function pushState() {
@@ -88,14 +90,6 @@
 
     function getTitle(seed) {
         return seed.paragraphs[0].paragraph
-    }
-
-    function updateTitle() {
-        title = getTitle(seed)
-    }
-
-    function getUrl(id) {
-        return `/${id}`
     }
 
     main()
