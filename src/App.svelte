@@ -23,31 +23,63 @@
         ids    = Object.keys(lookup)
         random.init(ids)
         if (id) {
-            seed = lookup[id]
-            save()
+            await go(id)
         } else {
             await next()
         }
     }
 
-    async function next() {
-        id   = random.get(id)
+    async function go(id) {
         seed = null
         await transition(0)
         seed = lookup[id]
         window.scrollTo(0,0)
-        save()
+        seen()
     }
 
-    function save() {
+    async function next() {
+        id = random.get(id)
+        await go(id)
+        pushState()
+    }
+
+    function seen() {
         clearTimeout(timer)
         timer = setTimeout(function() {
             random.set(id)
         }, 60 * 1000)
     }
 
+    function onpopstate(event) {
+        setState(event.state)
+    }
+
+    function getState() {
+        return { id, seed }
+    }
+
+    async function setState(state) {
+        id   = state.id
+        seed = state.seed
+    }
+
+    function pushState() {
+        let state  = getState()
+        let unused = ''
+        let url    = `/${id}`
+        window.history.pushState(state, unused, url)
+    }
+
     main()
 </script>
+
+<svelte:window on:popstate={onpopstate}></svelte:window>
+
+<svelte:head>
+    {#if seed}
+        <title>Who is Jesus? {seed.reference}</title>
+    {/if}
+</svelte:head>
 
 <svelte:body on:dblclick={next}/>
 
