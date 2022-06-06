@@ -24,30 +24,30 @@
         ids    = Object.keys(lookup)
         random.init(ids)
         if (id) {
-            setSeed()
-            setTitle()
-            seen()
+            updateSeed()
+            updateTitle()
+            replaceState()
         } else {
             await next()
         }
     }
 
-    function setSeed() {
+    function updateSeed() {
         seed = lookup[id]
+        setAsSeen(id)
     }
 
     async function next() {
         id   = random.get(id)
         seed = null
         await transition(0)
-        setSeed()
+        updateSeed()
         pushState()
         scrollTop()
-        setTitle()
-        seen()
+        updateTitle()
     }
 
-    function seen() {
+    function setAsSeen(id) {
         clearTimeout(timer)
         timer = setTimeout(function() {
             random.set(id)
@@ -64,15 +64,21 @@
 
     async function setState(state) {
         id = state.id
-        setSeed()
-        seen()
+        updateSeed()
     }
 
     function pushState() {
         let state  = getState()
         let unused = ''
-        let url    = `/${id}`
+        let url    = getUrl(id)
         window.history.pushState(state, unused, url)
+    }
+
+    function replaceState() {
+        let state  = getState()
+        let unused = ''
+        let url    = getUrl(id)
+        window.history.replaceState(state, unused, url)
     }
 
     function scrollTop() {
@@ -83,8 +89,12 @@
         return seed.paragraphs[0].paragraph
     }
 
-    function setTitle() {
+    function updateTitle() {
         title = getTitle(seed)
+    }
+
+    function getUrl(id) {
+        return `/${id}`
     }
 
     main()
