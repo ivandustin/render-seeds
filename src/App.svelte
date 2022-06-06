@@ -65,6 +65,7 @@
     async function setState(state) {
         id = state.id
         updateSeed()
+        updateTitle()
     }
 
     function pushState() {
